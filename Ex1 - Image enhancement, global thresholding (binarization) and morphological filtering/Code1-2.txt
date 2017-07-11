@@ -1,0 +1,17 @@
+I = Unbenannt; //convert the image to a viaraible
+imshow(I); //shows the Image
+B = uint8(mean(I, 3)); //converts image from RBG to GreyScale
+imshow(B); 
+imhist(B); //shows histogram
+B2 = histeq(B); //spread the Greyscale Across the spectrum contrast
+imhist(B2);
+se = strel('disk',3);
+J = imsubtract(imadd(B2,imtophat(B2,se)),imbothat(B2,se)); //apply bottom-hat filetring
+[level,EM] = graythresh(J) //tries to find a threshold value to alter image with an effective level
+BW3 = im2bw(J,level); //converts it to black and white
+BW3 = im2bw(J, 0.44); imshowpair(B2,BW3,'montage') // use this to test different values and see the difference
+imshowpair(B2,BW3,'montage')
+BW4 = imcomplement(BW3),
+se = strel('disk',6); //define a size to errode with imopen
+AO = imopen(BW4,se); //create a new picture with errosion
+figure, imshowpair(BW3,AO,'montage'); //preview and contrast images

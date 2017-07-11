@@ -1,0 +1,27 @@
+ 
+ I = Unbenannt; //convert the image to a variable usuable by Matlab
+ imshow(I); //Displays the Image
+ B = uint8(mean(I, 3)); //converts image from RBG to GreyScale
+ imshow(B); 
+ imhist(B);
+ B2 = histeq(B); //Enhance contrast using histogram equalization (contrast)
+		 //the intial histogram was spread to fill the full 255 bits
+ imhist(B2);
+ [level,EM] = graythresh(B2) //tries to find a threshold value to alter image with an effective level
+ BW = im2bw(B2,level); //converts it to black and white
+ BW = im2bw(B2, 0.44); imshowpair(B2,BW,'montage') // use this to test different values and see the difference
+ BW2 = imcomplement(BW), //done again to reverse the black and white
+ imshowpair(B2,BW2,'montage')
+
+se = strel('disk',1); IM2 = imclose(BW2,se); figure, imshowpair(BW2,IM2,'montage') //
+se = strel('disk',4); AO = imopen(IM2,se); figure, imshowpair(AO,IM2,'montage') //Morphologically close image
+se = strel('line',10,90);IM3 = imerode(AO,se); figure, imshowpair(AO,IM3,'montage');
+se = strel('disk',4);IM4 = imdilate(IM3,se); figure, imshowpair(IM4,IM3,'montage');
+
+
+strel('disk',1, 8); IM = imopen(BW2,se); figure, imshowpair(BW2,IM,'montage')
+se = strel('disk',4, 4); AO = imopen(IM2,se); figure, imshowpair(AO,IM2,'montage')
+ 
+ se = strel('disk',4); IM = imopen(BW2,se); figure, imshowpair(BW2,IM,'montage')
+se = strel('disk',1); IM2 = imclose(BW2,se); figure, imshowpair(BW2,IM2,'montage')
+ 
