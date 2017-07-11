@@ -1,5 +1,5 @@
 %to use the function
-%   sigma(0.5, input_exercise2)
+%   GoG(0.5, input_exercise2)
 %Image Filtering and Interest Points
 
 function matGoG = GoG(sigma, Image)

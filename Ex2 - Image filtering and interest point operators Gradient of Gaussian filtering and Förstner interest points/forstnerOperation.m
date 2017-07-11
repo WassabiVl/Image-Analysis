@@ -1,8 +1,8 @@
 %to use the function
-%   sigma(0.5, input_exercise2)
+%   forstnerOperation(0.5, input_exercise2)
 %Image Filtering and Interest Points
 
-function matA = sigma(sigma, Image)
+function matA = forstnerOperation(sigma, Image)
 % sigma is the standard deviation
 
 image = mat2gray(double(mean(Image, 3))); %create a double type matrix from greyscale image values between 0-1
@@ -47,13 +47,6 @@ for x = 1+r: imageSx-r
 	Iy(x,y) = sum(sum(f.*Gy));
     end
 end
-%gradient magnitude image (g)
-G = sqrt(Ix.^2 + Iy.^2);
-%matA = G;
-%create the image from the matrix
-
-
-
 
 %Exercise 2 Interest points (Förstner Operation)
 Wn = ones(5,5); %weights of local Neighborhood N
@@ -77,24 +70,19 @@ IxIy = Ix.*Iy;
     IxIyF = IxIy(z-WnR:z+WnR,t-WnR:t+WnR);
     WnIxIy(z,t) = sum(sum(IxIyF.*Wn));
     end
-end
- 
- %Adding the Matrises to M
- %M = WnIx2+WnIy2+WnIxIy; removed cause each point needs to be build
- %individually
+ end
  %corneness for each point
- %[sizeMx, sizeMy] = size(M);
  W = zeros(imageSx,imageSy);
  %roundness
  Q = zeros(imageSx,imageSy); 
- 
  %Binary Mask Martrx
  Mc = zeros(imageSx,imageSy);
+ %finding the points of interest
 for k = 1:imageSx 
     for l = 1:imageSy
         M = [WnIx2(k,l), WnIxIy(k,l); WnIxIy(k,l), WnIy2(k,l)];
-        w = ((trace(M))/2) - (sqrt((trace(M)/2)^2) - det(M));
-        q = (4*det(M))/((trace(M)^2).');
+        w = ((trace(M))/2) - (sqrt((trace(M)/2)^2) - det(M)); %cornerness of the image at M
+        q = (4*det(M))/((trace(M)^2).'); % Roundness of image at point M 
         if w>0
             W(k,l) = w;
             else
@@ -112,28 +100,20 @@ for k = 1:imageSx
         end       
     end    
 end
-
 %points of interest
 McW = W.*Mc;
 McQ = Q.*Mc;
-% poi = McW.*McQ;
-poi = W.*Q;
+poi = McW.*McQ;
+%poi = W.*Q;
 POI = imregionalmax(poi);
 [PoiR,PoiC] = find(POI);
+figure
 hold on
 plot(PoiC,PoiR,'b+');
+set(gca,'YDir','reverse');
+imshow(image);
 hold off
 matA = POI;
- 
- 
- 
-
-
-    
-
-
-
-
 end
 
 
