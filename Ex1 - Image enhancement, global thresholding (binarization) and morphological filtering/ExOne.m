@@ -4,7 +4,7 @@
 %How to call our main function: import the image, and then specify the
 %Strel, for example: ExOne(Unbenannt, strel('disk',4))
 
-%EXECUTING TASK D
+%EXECUTING TASK D To use all three tasks Together
 function [resultA, resultB, resultC] = ExOne(inputImg, ourStrel)
     resultA = stepA(inputImg); %enhacing contrast
     assignin('base','resultA',resultA);
@@ -14,7 +14,7 @@ function [resultA, resultB, resultC] = ExOne(inputImg, ourStrel)
     assignin('base','resultC',resultC);
 end
 
-%EXECUTING TASK A
+%EXECUTING TASK A Image Enhancement
 function visualA = stepA(n)
 %Visualize the img
     imshow(n);
@@ -29,7 +29,7 @@ function visualA = stepA(n)
     visualA = contrastedImg;
 end
 
-%EXECUTING TASK B
+%EXECUTING TASK B thresholding
 function visualB = stepB(m)
     level = graythresh(m); %Finds the threshold level
     BW = im2bw(m,level); %converts it to black and white
@@ -39,7 +39,7 @@ function visualB = stepB(m)
     visualB = inverseBW;
 end
 
-%EXECUTING TASK C
+%EXECUTING TASK C Binary mask and Morphological operators
 function visualC = stepC(img, st)
     %Gets the neighboring strel to compare it to the pixels in our image
     %In our case, a disk size 4 on 2D (strel('disk',4))
