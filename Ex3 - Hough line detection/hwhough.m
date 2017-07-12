@@ -49,7 +49,7 @@ G = sqrt(Ix.^2 + Iy.^2);
 G1= mat2gray(G);
 level = graythresh(G1); %value 0.2156
 % BW = edge(G,'canny');
-BW = im2bw(G1,level);
+BW = imbinarize(G1,level);
 
 %Part2
 Pmax= ceil(sqrt(imageSx.^2 + imageSy.^2));
@@ -62,7 +62,7 @@ for z=1:imageSx
     for z2=1:imageSy 
         if BW(z,z2)==1
                 alpha= atand(Iy(z,z2)/Ix(z,z2));
-                p = z*cos(alpha) + z2*sin(alpha);
+                p = z*cosd(alpha) + z2*sind(alpha);% to use the sin and cosine function in degree
                 p1 = round(p);
                 alpha1 = round(alpha);
                 pis = find(Pind == p1);
@@ -100,9 +100,7 @@ figure, imshow(BW), hold on
 
 for kin = 1:length(lines)
    kxy = [lines(kin).point1; lines(kin).point2];
-   plot(kxy(:,1),kxy(:,2),'LineWidth',2,'Color','green');
-
-   
+   plot(kxy(:,1),kxy(:,2),'LineWidth',2,'Color','green'); 
    plot(kxy(1,1),kxy(1,2),'x','LineWidth',2,'Color','yellow');
    plot(kxy(2,1),kxy(2,2),'x','LineWidth',2,'Color','red');
 end
