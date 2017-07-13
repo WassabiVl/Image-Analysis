@@ -4,7 +4,7 @@
 function matA =  hwhough(sigma, Image)
 image = mat2gray(double(mean(Image, 3))); %create a double type matrix from greyscale image
 
-% Step 1
+% Step 1 create the GoG filter
 r = abs(ceil(3 * sigma));
 r2 = (r * 2) + 1;
 sizeA = ceil(r2);
@@ -92,7 +92,7 @@ colormap(autumn(5));
 imshow(H,[],'XData',Alpha,'YData',Pind,...
             'InitialMagnification','fit');
         axis on, axis normal, hold on;
-P  = houghpeaks(H,32,'threshold',ceil(0.3*max(H(:))));
+P  = houghpeaks(double(H),40,'threshold',ceil(0.05*max(H(:))));
 kx = Alpha(P(:,2)); ky = Pind(P(:,1));
 plot(kx,ky,'s','color','white');
 lines = houghlines(BW,Alpha,Pind,P,'FillGap',255,'MinLength',7);
