@@ -12,7 +12,7 @@ image = mat2gray(double(mean(Image, 3))); %create a double type matrix from grey
 r = abs(ceil(3 * sigma)); %set kernel matrix colums\row size part 1 has to be an integer to create the matrix
 r2 = (r * 2) + 1;  %set kernel matrix colums\row size part 2
 sizeA = ceil(r2); % round the number up to its integer value
-counter = r * - 1; 
+counter = r * - 1; %use this counter to fill the data of the matrix
 Cx = zeros(sizeA, sizeA);
 %create the Cx array
 for n = 1:sizeA 

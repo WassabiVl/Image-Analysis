@@ -77,7 +77,7 @@ end
 %     for z2=1:imageSy 
 %         if BW(z,z2)==1
 %             for alpha = -90:89
-%                 p = z*cos(alpha) + z2*sin(alpha);
+%                 p = z*cosd(alpha) + z2*sind(alpha);
 %                 p = round(p);
 %                 pis = find(Pind == p);
 %                 alphai = find(Alpha == alpha);
@@ -104,7 +104,7 @@ for kin = 1:length(lines)
    plot(kxy(1,1),kxy(1,2),'x','LineWidth',2,'Color','yellow');
    plot(kxy(2,1),kxy(2,2),'x','LineWidth',2,'Color','red');
 end
-
+hold off
 
 %Use Houghpeaks to find maxima of H
 % maxH = houghpeaks(H,5,'threshold',ceil(0.3*max(H(:))));

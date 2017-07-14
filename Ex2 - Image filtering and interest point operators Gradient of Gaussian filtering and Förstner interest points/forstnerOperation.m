@@ -42,7 +42,7 @@ Ix=zeros(imageSx,imageSy);
 Iy=zeros(imageSx,imageSy);
 for x = 1+r: imageSx-r
     for y = 1+r : imageSy-r
-	f=image(x-r:x+r,y-r:y+r);
+	f=image(x-r:x+r,y-r:y+r); % calls upin a matrix size exactly as the gx/gy filter
 	Ix(x,y) = sum(sum(f.*Gx));
 	Iy(x,y) = sum(sum(f.*Gy));
     end
