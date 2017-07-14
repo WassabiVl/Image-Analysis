@@ -2,51 +2,10 @@
 %   hwhough(0.5, input_ex3)
 
 function matA =  hwhough(sigma, Image)
-image = mat2gray(double(mean(Image, 3))); %create a double type matrix from greyscale image
-
-% Step 1 create the GoG filter
-r = abs(ceil(3 * sigma));
-r2 = (r * 2) + 1;
-sizeA = ceil(r2);
-counter = r * - 1;
-Cx = zeros(sizeA, sizeA);
-
-%create the Cx array
-
-for n = 1:sizeA 
-    for m = 1:sizeA
-        Cx(n,m) = counter;
-        counter = counter + 1;
-    end
-    counter = r * -1;
-end
-Cy = Cx.';
-% Create the GOG filter for Gx 
-Gx = zeros(sizeA,sizeA);
-for i = 1:sizeA 
-    for j = 1:sizeA
-        Gx(i,j) = -(Cx(i,j)*exp(-((Cx(i,j)^2 + (Cy(i,j))^2)/(2*sigma^2))))/(2*pi*sigma^4);
-    end    
-end
-
-%create the filter of Gy
-Gy = transpose(Gx);
-% apply the filter to the image by convolution
-%using the method requied by the teacher
-[imageSx, imageSy] = size(image);
-Ix=zeros(imageSx,imageSy);
-Iy=zeros(imageSx,imageSy);
-for x = 1+r: imageSx-r
-    for y = 1+r : imageSy-r
-	f=image(x-r:x+r,y-r:y+r);
-	Ix(x,y) = sum(sum(f.*Gx));
-	Iy(x,y) = sum(sum(f.*Gy));
-    end
-end
-
-G = sqrt(Ix.^2 + Iy.^2);
+[Gimage,IX,IY,Img] = GoG(sigma, Image);
+[imageSx,imageSy] = size(Img);
 %create the image from the matrix
-G1= mat2gray(G);
+G1= mat2gray(Gimage);
 level = graythresh(G1); %value 0.2156
 % BW = edge(G,'canny');
 BW = imbinarize(G1,level);
@@ -61,7 +20,7 @@ H = zeros(ceil(Pmax*2)+1,180);
 for z=1:imageSx
     for z2=1:imageSy 
         if BW(z,z2)==1
-                alpha= atand(Iy(z,z2)/Ix(z,z2));
+                alpha= atand(IY(z,z2)/IX(z,z2));
                 p = z*cosd(alpha) + z2*sind(alpha);% to use the sin and cosine function in degree
                 p1 = round(p);
                 alpha1 = round(alpha);

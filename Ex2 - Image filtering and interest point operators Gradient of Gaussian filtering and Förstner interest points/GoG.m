@@ -2,11 +2,11 @@
 %   GoG(0.5, input_exercise2)
 %Image Filtering and Interest Points
 
-function matGoG = GoG(sigma, Image)
+function [Gimage,IX,IY,Img] = GoG(sigma, Image)
 % sigma is the standard deviation
 
 image = mat2gray(double(mean(Image, 3))); %create a double type matrix from greyscale image values between 0-1
-
+Img=image;
 %excercies 1 Image Filerting using (GoG) filter
 % Step 1 create a filter kernel to be used
 r = abs(ceil(3 * sigma)); %set kernel matrix colums\row size part 1 has to be an integer to create the matrix
@@ -22,7 +22,7 @@ for n = 1:sizeA
     end
     counter = r * -1;
 end
-Cy = Cx.'; %Cy is the opposite direction of Cx
+Cy = Cx.'; %Cy is inverse transposed of Cx
 % Create the GOG filter for Gx 
 Gx = zeros(sizeA,sizeA);
 for i = 1:sizeA 
@@ -47,7 +47,16 @@ for x = 1+r: imageSx-r
 	Iy(x,y) = sum(sum(f.*Gy));
     end
 end
+
 %gradient magnitude image (g)
 G = sqrt(Ix.^2 + Iy.^2);
-matGoG = imshow(mat2gray(G));
+Gimage = G;
+IX = Ix;
+IY=Iy;
+% figure 
+% imshow(mat2gray(G));
+% figure
+% imshow(Ix);
+% figure
+% imshow(Iy);
 %create the image from the matrix
