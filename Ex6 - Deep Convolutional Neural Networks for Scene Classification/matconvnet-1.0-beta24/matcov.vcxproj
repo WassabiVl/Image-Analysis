@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{C409D51B-7847-4032-9973-3950B671974F}</ProjectGuid>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfAtl>Static</UseOfAtl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfAtl>Static</UseOfAtl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="matlab\src\bits\data.cpp" />
+    <ClCompile Include="matlab\src\bits\datamex.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\bilinearsampler_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\bnorm_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\copy_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\im2row_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\imread_gdiplus.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\imread_libjpeg.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\imread_quartz.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\normalize_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\pooling_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\roipooling_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\subsample_cpu.cpp" />
+    <ClCompile Include="matlab\src\bits\impl\tinythread.cpp" />
+    <ClCompile Include="matlab\src\bits\imread.cpp" />
+    <ClCompile Include="matlab\src\bits\nnbias.cpp" />
+    <ClCompile Include="matlab\src\bits\nnbilinearsampler.cpp" />
+    <ClCompile Include="matlab\src\bits\nnbnorm.cpp" />
+    <ClCompile Include="matlab\src\bits\nnconv.cpp" />
+    <ClCompile Include="matlab\src\bits\nnfullyconnected.cpp" />
+    <ClCompile Include="matlab\src\bits\nnnormalize.cpp" />
+    <ClCompile Include="matlab\src\bits\nnpooling.cpp" />
+    <ClCompile Include="matlab\src\bits\nnroipooling.cpp" />
+    <ClCompile Include="matlab\src\bits\nnsubsample.cpp" />
+    <ClCompile Include="matlab\src\vl_cudatool.cpp" />
+    <ClCompile Include="matlab\src\vl_imreadjpeg.cpp" />
+    <ClCompile Include="matlab\src\vl_imreadjpeg_old.cpp" />
+    <ClCompile Include="matlab\src\vl_nnbilinearsampler.cpp" />
+    <ClCompile Include="matlab\src\vl_nnbnorm.cpp" />
+    <ClCompile Include="matlab\src\vl_nnconv.cpp" />
+    <ClCompile Include="matlab\src\vl_nnconvt.cpp" />
+    <ClCompile Include="matlab\src\vl_nnnormalize.cpp" />
+    <ClCompile Include="matlab\src\vl_nnpool.cpp" />
+    <ClCompile Include="matlab\src\vl_nnroipool.cpp" />
+    <ClCompile Include="matlab\src\vl_taccummex.cpp" />
+    <ClCompile Include="matlab\src\vl_tmove.cpp" />
+    <ClCompile Include="matlab\yprime.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="matlab\src\bits\data.hpp" />
+    <ClInclude Include="matlab\src\bits\datacu.hpp" />
+    <ClInclude Include="matlab\src\bits\datamex.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\bilinearsampler.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\blashelper.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\bnorm.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\compat.h" />
+    <ClInclude Include="matlab\src\bits\impl\copy.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\cudnnhelper.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\fast_mutex.h" />
+    <ClInclude Include="matlab\src\bits\impl\im2row.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\imread_helpers.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnbias_blas.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnbias_cudnn.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnbilinearsampler_cudnn.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnbnorm_cudnn.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnconv_blas.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnconv_cudnn.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\nnpooling_cudnn.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\normalize.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\pooling.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\roipooling.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\subsample.hpp" />
+    <ClInclude Include="matlab\src\bits\impl\tinythread.h" />
+    <ClInclude Include="matlab\src\bits\imread.hpp" />
+    <ClInclude Include="matlab\src\bits\mexutils.h" />
+    <ClInclude Include="matlab\src\bits\nnbias.hpp" />
+    <ClInclude Include="matlab\src\bits\nnbilinearsampler.hpp" />
+    <ClInclude Include="matlab\src\bits\nnbnorm.hpp" />
+    <ClInclude Include="matlab\src\bits\nnconv.hpp" />
+    <ClInclude Include="matlab\src\bits\nnfullyconnected.hpp" />
+    <ClInclude Include="matlab\src\bits\nnnormalize.hpp" />
+    <ClInclude Include="matlab\src\bits\nnpooling.hpp" />
+    <ClInclude Include="matlab\src\bits\nnroipooling.hpp" />
+    <ClInclude Include="matlab\src\bits\nnsubsample.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="doc\site\theme\base.html" />
+    <None Include="doc\site\theme\content.html" />
+    <None Include="doc\site\theme\nav.html" />
+    <None Include="doc\site\theme\toc.html" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

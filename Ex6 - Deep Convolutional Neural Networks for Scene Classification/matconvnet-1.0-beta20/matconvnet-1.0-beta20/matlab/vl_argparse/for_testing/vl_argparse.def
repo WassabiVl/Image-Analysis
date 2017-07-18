@@ -1,0 +1,23 @@
+LIBRARY vl_argparse
+EXPORTS
+vl_argparseInitialize
+vl_argparseInitializeWithHandlers
+vl_argparseTerminate
+vl_argparsePrintStackTrace
+mlxVl_argparse
+mlxVl_compilenn
+mlxVl_nnconcat
+mlxVl_nncrop
+mlxVl_nndropout
+mlxVl_nnloss
+mlxVl_nnnoffset
+mlxVl_nnnormalizelp
+mlxVl_nnpdist
+mlxVl_nnrelu
+mlxVl_nnsigmoid
+mlxVl_nnsoftmax
+mlxVl_nnsoftmaxloss
+mlxVl_nnspnorm
+mlxVl_rootnn
+mlxVl_setupnn
+

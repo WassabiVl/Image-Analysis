@@ -27,9 +27,9 @@ function model = LearnGaussMixModel(trainVect, n_comp)
     
     % threshold for stopping the iteration
     eps=10^-6;
-    
+    CompN =n_comp;
     % loop over the desired number of components
-    for i=1:n_comp
+    for i=1:CompN
         
         % the first overall model probability is -infinity
         LastPX=-inf;
@@ -67,7 +67,7 @@ function model = LearnGaussMixModel(trainVect, n_comp)
         
         % find a component to split into two and init them
         % but only, if the desired number n_comp is not reached
-        if i < n_comp
+        if i < CompN
             model = InitNewComponent(model, trainVect);
         end
     end
@@ -108,7 +108,7 @@ Nc = numel(model.weight);
 LnVectorProb = CalcLnVectorProb(model,trainVect);
 MaxLVP = max(LnVectorProb, [],1);
 ScalFactor= repmat(MaxLVP, Nc,1);
-Denom = MaxLVP +log(sum(exp(LnVectorProb - ScalFactor)));
+Denom = MaxLVP +log(sum(exp(LnVectorProb - ScalFactor),1));
 Denom = repmat(Denom,Nc,1);
 LnCompProb = LnVectorProb - Denom;
 end
@@ -122,23 +122,47 @@ function model = GmmMStep(model, trainVect, LnCompProb)
     LCPExp = exp(LnCompProb);
     [Nv2,~] = size(trainVect);
     Ni = length (model.weight);
-    Np = zeros(Ni,Nv2);
-    SigmaCa = zeros(Ni,Nv2);
+%     Np = zeros(Ni,Nv2);
+%     SigmaCa = zeros(Ni,Nv2);
+%     for z=1:Ni
+%         for u=1:Nv2
+%             TrainShift = trainVect(u,:) - model.mean(z,:);
+%             Np = LCPExp(z,u);
+%             SigmaCa = Ni*Np*(TrainShift*TrainShift');
+%         end
+%     end
+%     AlphaC = Np/Nv2;
+%     SigmaC = SigmaCa/Np;
+% %     model = SigmaC;
+    % number of dimensions
+    n_dims = size(trainVect, 2);
+    % sum of points in each component
+    n_points_per_comp = sum(LCPExp, 2);    
+    % computation of weights for each component
+    % this is the percentual coverage of each component wrt all points
+    model.weight = n_points_per_comp/Nv2;
     for z=1:Ni
-        for u=1:Nv2
-            TrainShift = trainVect(u,:) - model.mean(z,:);
-            Np = LCPExp(z,u);
-            SigmaCa = Ni*Np*(TrainShift*TrainShift');
+        % array for summation for mean value calculation
+        sum_for_mean = zeros(1,3);        
+        % loop over all points (feature vectors!)
+        for u=1:Nv2        
+            % summarize values
+            sum_for_mean = (sum_for_mean + trainVect(u,:)* LCPExp (z,u));
         end
-    end
-    AlphaC = Np/Nv2;
-    SigmaC = SigmaCa/Np;
-%     model = SigmaC;
-    
-    
-
-
-
+        % divide sum through corresponding number of point in the component
+        model.mean(z,:) = sum_for_mean / n_points_per_comp(z,1);
+        % also compute covariance matrix in loop over all components
+        % initialize sum for covar-matrix of corresonding component
+        sum_for_covar = zeros(n_dims, n_dims);        
+        % again, loop over all feature vectors
+        for u=1:Nv2        
+            % summarize values of weighted dyadic product
+            d = (trainVect(u,:)-model.mean(z,:));
+            sum_for_covar = sum_for_covar + (d' * d) * LnCompProb(z,u);
+        end
+        % divide trough the number of point in that component
+        model.covar(z,:,:) = ((1/n_points_per_comp(z,1))*sum_for_covar);            
+    end    
 end
 
 %--------------------------------------------------------------------------
@@ -214,19 +238,16 @@ function PlotGMM(model, trainVect)
     plot3(trainVect(:,1),trainVect(:,2),trainVect(:,3), 'g.','MarkerSize',7);
 
     % plot elements of the estimated components:
-    for i=1:n_comp
-        
+    for i=1:n_comp        
         % eigenvektor / eigenwert decomposition
         [eVec,eVal] = eig(squeeze(model.covar(i,:,:)));
-
         % plotting of mean values
         mean = squeeze(model.mean(i,:));
         plot3(mean(1),mean(2),mean(3),'ro');
-
         % derivation and plotting of the three main axes of the cvariance
         % matrices
-        for i=1:n_dims
-            devVec = (sqrt(eVal(i,i)) * eVec(:,i))*[-1,1];
+        for ij=1:n_dims
+            devVec = (sqrt(eVal(ij,ij)) * eVec(:,ij))*[-1,1];
             plot3(mean(1) + devVec(1,:), mean(2) + devVec(2,:), mean(3) + devVec(3,:),'b');
         end
     end
@@ -264,7 +285,7 @@ function NewModel = InitNewComponent(model, trainVect)
     % the biggest component will be splitted to get a balanced size of
     % components --> not the optimal criterium!!!!
     % size corresponds to weights...
-    [ignore, splitComp] = max(model.weight);
+    [~, splitComp] = max(model.weight);
 
     % calculate new weight vector, mean and covariance
     newWeight = zeros(n_comp+1,1);
@@ -278,7 +299,7 @@ function NewModel = InitNewComponent(model, trainVect)
 
     % Component splitComp will be splitted along its dominant axis
     [eVec,eVal] = eig(squeeze(newCovar(splitComp,:,:)));
-    [ignore, majAxis] = max(diag(eVal));
+    [~, majAxis] = max(diag(eVal));
     devVec = sqrt(eVal(majAxis,majAxis)) * eVec(:,majAxis)';
 
     % initialize new component
